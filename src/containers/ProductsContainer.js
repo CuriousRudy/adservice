@@ -5,6 +5,7 @@ import api from '../services/api';
 export default class ProductsContainer extends React.Component {
   state = {
     loading: true,
+    filter: 'all',
     products: []
   };
 
@@ -21,31 +22,52 @@ export default class ProductsContainer extends React.Component {
   //   return nextProps.products !== this.state.products;
   // };
 
-  render() {
-    console.log(this.state.products);
+  updateFilter = e => {
+    console.log(e.target.name);
+    this.setState({
+      filter: e.target.value
+    });
+  };
 
+  render() {
     return (
       <div>
         <div>
           <ul id="dropdown1" className="dropdown-content">
             <li>
-              <a href="#!">Coca Cola</a>
+              <a
+                onClick={e => this.updateFilter(e)}
+                name="Coca Cola"
+                value="this.state.filter"
+              >
+                Coca Cola
+              </a>
             </li>
             <li>
-              <a href="#!">Logitech</a>
+              <a onClick={e => this.updateFilter(e)} name="Logitech">
+                Logitech
+              </a>
             </li>
 
             <li>
-              <a href="#!">Apple</a>
+              <a onClick={e => this.updateFilter(e)} name="Apple">
+                Apple
+              </a>
             </li>
             <li>
-              <a href="#!">Acer</a>
+              <a onClick={e => this.updateFilter(e)} name="Acer">
+                Acer
+              </a>
             </li>
             <li>
-              <a href="#!">Staples</a>
+              <a onClick={e => this.updateFilter(e)} name="Staples">
+                Staples
+              </a>
             </li>
             <li>
-              <a href="#!">Best Buy</a>
+              <a onClick={e => this.updateFilter(e)} name="Best Buy">
+                Best Buy
+              </a>
             </li>
           </ul>
           <nav>
@@ -86,7 +108,10 @@ export default class ProductsContainer extends React.Component {
                 </tr>
               </thead>
 
-              <ProductsList products={this.state.products} />
+              <ProductsList
+                filter={this.state.filter}
+                products={this.state.products}
+              />
             </table>
           </div>
         )}
