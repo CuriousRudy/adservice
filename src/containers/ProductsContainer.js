@@ -5,7 +5,7 @@ import api from '../services/api';
 export default class ProductsContainer extends React.Component {
   state = {
     loading: true,
-    filter: 'all',
+    filter: 'All',
     products: []
   };
 
@@ -25,7 +25,7 @@ export default class ProductsContainer extends React.Component {
   updateFilter = e => {
     console.log(e.target.name);
     this.setState({
-      filter: e.target.value
+      filter: e.target.name
     });
   };
 
@@ -75,7 +75,7 @@ export default class ProductsContainer extends React.Component {
               <a className="brand-logo center">Rakuten</a>
               <ul className="right hide-on-med-and-down">
                 <li>
-                  <a href="sass.html">Master List</a>
+                  <a href="/">Master List</a>
                 </li>
                 {/* <!-- Dropdown Trigger --> */}
                 <li>
@@ -84,9 +84,8 @@ export default class ProductsContainer extends React.Component {
                     href="#!"
                     data-activates="dropdown1"
                   >
-                    Advertisers<i className="material-icons right">
-                      arrow_drop_down
-                    </i>
+                    {this.state.filter}
+                    <i className="material-icons right">arrow_drop_down</i>
                   </a>
                 </li>
               </ul>
