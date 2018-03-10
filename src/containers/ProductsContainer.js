@@ -6,21 +6,21 @@ export default class ProductsContainer extends React.Component {
   state = {
     loading: true,
     filter: 'All',
+    current_index: 0,
     products: []
   };
 
   componentDidMount = () => {
-    api.products
-      .getProducts()
-      .then(
-        data => this.setState({ products: [...data] }),
-        this.setState({ loading: false })
-      );
-  };
+    api.products.getProducts().then(
+      data =>
+        this.setState({
+          products: [...data.products[0]],
+          current_index: data.current_index
+        }),
 
-  // shouldComponentUpdate = nextProps => {
-  //   return nextProps.products !== this.state.products;
-  // };
+      this.setState({ loading: false })
+    );
+  };
 
   updateFilter = e => {
     console.log(e.target.name);
@@ -29,11 +29,36 @@ export default class ProductsContainer extends React.Component {
     });
   };
 
+  loadMoreResults = e => {
+    api.products.loadMore(this.state.current_index).then(data =>
+      this.setState({
+        current_index: data.current_index,
+        products: [...this.state.products, ...data.products[0]]
+      })
+    );
+  };
+
   render() {
+    console.log(this.state);
     return (
       <div>
         <div>
           <ul id="dropdown1" className="dropdown-content">
+            <li>
+              <a onClick={e => this.updateFilter(e)} name="Acer">
+                Acer
+              </a>
+            </li>
+            <li>
+              <a onClick={e => this.updateFilter(e)} name="Apple">
+                Apple
+              </a>
+            </li>
+            <li>
+              <a onClick={e => this.updateFilter(e)} name="Best Buy">
+                Best Buy
+              </a>
+            </li>
             <li>
               <a
                 onClick={e => this.updateFilter(e)}
@@ -44,19 +69,13 @@ export default class ProductsContainer extends React.Component {
               </a>
             </li>
             <li>
+              <a onClick={e => this.updateFilter(e)} name="Lenovo">
+                Lenovo
+              </a>
+            </li>
+            <li>
               <a onClick={e => this.updateFilter(e)} name="Logitech">
                 Logitech
-              </a>
-            </li>
-
-            <li>
-              <a onClick={e => this.updateFilter(e)} name="Apple">
-                Apple
-              </a>
-            </li>
-            <li>
-              <a onClick={e => this.updateFilter(e)} name="Acer">
-                Acer
               </a>
             </li>
             <li>
@@ -64,46 +83,39 @@ export default class ProductsContainer extends React.Component {
                 Staples
               </a>
             </li>
-            <li>
-              <a onClick={e => this.updateFilter(e)} name="Best Buy">
-                Best Buy
-              </a>
-            </li>
           </ul>
-          <nav>
-            <div className="nav-wrapper">
-              <a className="brand-logo center">Rakuten</a>
-              <ul className="right hide-on-med-and-down">
-                <li>
-                  <a href="/">Master List</a>
-                </li>
-                {/* <!-- Dropdown Trigger --> */}
-                <li>
-                  <a
-                    className="dropdown-button"
-                    href="#!"
-                    data-activates="dropdown1"
-                  >
-                    {this.state.filter}
-                    <i className="material-icons right">arrow_drop_down</i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-        {this.state.loading ? (
-          <div className="progress">
-            <div className="indeterminate" />
+          <div className="navbar-fixed">
+            <nav>
+              <div className="nav-wrapper">
+                <a className="brand-logo center">Rakuten</a>
+                <ul className="right hide-on-med-and-down">
+                  <li>
+                    <a href="/">Master List</a>
+                  </li>
+                  {/* <!-- Dropdown Trigger --> */}
+                  <li>
+                    <a
+                      className="dropdown-button"
+                      href="#!"
+                      data-activates="dropdown1"
+                    >
+                      {this.state.filter}
+                      <i className="material-icons right">arrow_drop_down</i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
           </div>
-        ) : (
-          <div className="container">
-            <table className="highlight">
+        </div>
+        <div className="row">
+          <div className="col l12 s12">
+            <table className="centered striped responsive-table scale-transition scale-in">
               <thead>
                 <tr>
+                  <th>Advertiser</th>
                   <th>Product Name</th>
                   <th>Product SKU</th>
-                  <th>Advertiser</th>
                 </tr>
               </thead>
 
@@ -113,7 +125,14 @@ export default class ProductsContainer extends React.Component {
               />
             </table>
           </div>
-        )}
+        </div>
+        <button
+          onClick={() => this.loadMoreResults()}
+          style={{ width: '100%' }}
+          className="btn centered waves-effect waves-light"
+        >
+          Show More
+        </button>
       </div>
     );
   }

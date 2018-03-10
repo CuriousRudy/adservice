@@ -7,10 +7,10 @@ const ProductsList = props => {
       {props.filter === 'All'
         ? props.products.map((entry, i) => {
             return (
-              <tr key={i + 1}>
+              <tr className="scale-transition scale-in" key={i + 1}>
+                <td>{entry.advertiser_name}</td>
                 <td>{entry.product_name}</td>
                 <td>{entry.product_sku}</td>
-                <td>{entry.advertiser_name}</td>
               </tr>
             );
           })
@@ -20,10 +20,10 @@ const ProductsList = props => {
             })
             .map((entry, i) => {
               return (
-                <tr key={i + 1}>
+                <tr className="scale-transition scale-in" key={i + 1}>
+                  <td>{entry.advertiser_name}</td>
                   <td>{entry.product_name}</td>
                   <td>{entry.product_sku}</td>
-                  <td>{entry.advertiser_name}</td>
                 </tr>
               );
             })}
