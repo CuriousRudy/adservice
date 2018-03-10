@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ProductsList = props => {
-  console.log(props.filter);
+  // console.log(props.filter);
   return (
     <tbody>
       {props.filter === 'All'

@@ -23,7 +23,7 @@ export default class ProductsContainer extends React.Component {
   };
 
   updateFilter = e => {
-    console.log(e.target.name);
+    // console.log(e.target.name);
     this.setState({
       filter: e.target.name
     });
@@ -39,7 +39,7 @@ export default class ProductsContainer extends React.Component {
   };
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <div>
         <div>
@@ -84,7 +84,7 @@ export default class ProductsContainer extends React.Component {
               </a>
             </li>
           </ul>
-          <div className="navbar-fixed">
+          <div className="navbar-fixed blue-grey lighten-2">
             <nav>
               <div className="nav-wrapper">
                 <a className="brand-logo center">Rakuten</a>
