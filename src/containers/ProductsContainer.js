@@ -3,14 +3,18 @@ import ProductsList from '../components/ProductsList';
 import api from '../services/api';
 
 export default class ProductsContainer extends React.Component {
-  state = {
-    loading: true,
-    filter: 'All',
-    current_index: 0,
-    products: []
-  };
+  constructor() {
+    super();
 
-  componentDidMount = () => {
+    this.state = {
+      loading: true,
+      filter: 'All',
+      current_index: 0,
+      products: []
+    };
+  }
+
+  componentDidMount() {
     api.products.getProducts().then(
       data =>
         this.setState({
@@ -20,23 +24,23 @@ export default class ProductsContainer extends React.Component {
 
       this.setState({ loading: false })
     );
-  };
+  }
 
-  updateFilter = e => {
+  updateFilter(e) {
     // console.log(e.target.name);
     this.setState({
       filter: e.target.name
     });
-  };
+  }
 
-  loadMoreResults = e => {
+  loadMoreResults(e) {
     api.products.loadMore(this.state.current_index).then(data =>
       this.setState({
         current_index: data.current_index,
         products: [...this.state.products, ...data.products[0]]
       })
     );
-  };
+  }
 
   render() {
     // console.log(this.state);
@@ -81,6 +85,21 @@ export default class ProductsContainer extends React.Component {
             <li>
               <a onClick={e => this.updateFilter(e)} name="Staples">
                 Staples
+              </a>
+            </li>
+            <li>
+              <a onClick={e => this.updateFilter(e)} name="Motorola">
+                Motorola
+              </a>
+            </li>
+            <li>
+              <a onClick={e => this.updateFilter(e)} name="Nike">
+                Nike
+              </a>
+            </li>
+            <li>
+              <a onClick={e => this.updateFilter(e)} name="Holmes">
+                Holmes
               </a>
             </li>
           </ul>
