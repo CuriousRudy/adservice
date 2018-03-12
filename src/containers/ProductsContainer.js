@@ -47,7 +47,16 @@ export default class ProductsContainer extends React.Component {
     return (
       <div>
         <div>
-          <ul id="dropdown1" className="dropdown-content">
+          <ul
+            value={this.state.filter}
+            id="dropdown1"
+            className="dropdown-content"
+          >
+            <li>
+              <a onClick={e => this.updateFilter(e)} name="All">
+                Show All
+              </a>
+            </li>
             <li>
               <a onClick={e => this.updateFilter(e)} name="Acer">
                 Acer
@@ -64,11 +73,7 @@ export default class ProductsContainer extends React.Component {
               </a>
             </li>
             <li>
-              <a
-                onClick={e => this.updateFilter(e)}
-                name="Coca Cola"
-                value="this.state.filter"
-              >
+              <a onClick={e => this.updateFilter(e)} name="Coca Cola">
                 Coca Cola
               </a>
             </li>
@@ -127,24 +132,37 @@ export default class ProductsContainer extends React.Component {
             </nav>
           </div>
         </div>
-        <div className="row">
-          <div className="col l12 s12">
-            <table className="centered striped responsive-table scale-transition scale-in">
-              <thead>
-                <tr>
-                  <th>Advertiser</th>
-                  <th>Product Name</th>
-                  <th>Product SKU</th>
-                </tr>
-              </thead>
-
-              <ProductsList
-                filter={this.state.filter}
-                products={this.state.products}
-              />
-            </table>
+        {this.state.products.length < 1 ? (
+          <div>
+            <h5 className="center-align">
+              Compiling a list of products...this might take a few seconds...
+            </h5>
+            <h5 className="center-align">Showing 1000 results at a time:</h5>
+            <div class="progress">
+              <div class="indeterminate" />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="row">
+            <div className="col l12 s12">
+              <table className="centered striped scale-transition scale-in">
+                <thead>
+                  <tr>
+                    <th>Advertiser</th>
+                    <th>Product Name</th>
+                    <th>Product SKU</th>
+                  </tr>
+                </thead>
+
+                <ProductsList
+                  filter={this.state.filter}
+                  products={this.state.products}
+                />
+              </table>
+            </div>
+          </div>
+        )}
+
         <button
           onClick={() => this.loadMoreResults()}
           style={{ width: '100%' }}
